@@ -36,4 +36,6 @@
 - 服务端接口部署
 - 针对白名单进行展示入口，进行题库增加
 
-### 表字段设计
+## 技术栈
+
+- [css 中的 grid 布局](https://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html)，搞一个数字键盘
