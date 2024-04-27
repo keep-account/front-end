@@ -28,4 +28,13 @@ export type BillData = {
   bills: Bill[]
   totalExpense: number
   totalIncome: number
-}[]
+  titleDate: string
+  day: string
+}
+
+export type BillRes = {
+  bills: BillData[]
+  totalExpense: number
+  totalIncome: number
+  remain: number
+}

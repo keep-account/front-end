@@ -20,13 +20,17 @@
         </view>
       </view>
       <text class="text-white mb-2">本月支出(元)</text>
-      <text class="text-3xl text-white mb-6 font-bold">￥987654</text>
+      <text class="text-3xl text-white mb-6 font-bold">￥{{ resData?.totalExpense }}</text>
       <view class="text-white pb-16 flex justify-start">
         <view class="w-1/2"
-          ><text>收入 <text class="font-medium">￥122222</text></text></view
+          ><text
+            >收入 <text class="font-medium">￥{{ resData?.totalIncome }}</text></text
+          ></view
         >
         <view
-          ><text>结余 <text class="font-medium">￥122222</text></text>
+          ><text
+            >结余 <text class="font-medium">￥ {{ resData?.remain || 0 }}</text></text
+          >
         </view>
       </view>
     </view>
@@ -40,13 +44,17 @@
         </view>
       </block>
     </view>
-    <HomeList />
+    <HomeList v-if="resData?.bills.length" :list="resData?.bills" />
     <AddBill />
   </view>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { getBillsByAccount } from '@/services/bill'
+import { onLoad } from '@dcloudio/uni-app'
+import type { BillRes } from '@/types/bill'
+import { useAccountStore } from '@/store'
 import HomeList from './components/Home/HomeList.vue'
 import AddBill from './components/AddBill/index.vue'
 import { formatDate } from '@/utils'
@@ -70,10 +78,28 @@ const list = ref([
     icon: 'icon-new',
   },
 ])
+// 月份切换 进行查询数据
 const bindDateChange = (e) => {
   console.log('picker发送选择改变，携带值为', e.detail.value)
   date.value = e.detail.value
 }
+const resData = ref<BillRes>()
+const accountStore = useAccountStore()
+onLoad(() => {
+  if (accountStore.curAccount) {
+    getBillsByAccount({
+      page: 1,
+      size: 5,
+      startTime: '2024-04-01',
+      endTime: '2024-04-30',
+      accountId: accountStore.curAccount.id,
+    }).then((res) => {
+      if (res.data) {
+        resData.value = res.data
+      }
+    })
+  }
+})
 </script>
 
 <style></style>

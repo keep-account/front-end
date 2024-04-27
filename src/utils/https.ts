@@ -18,10 +18,11 @@ const httpInterceptor = {
       ...options.header,
     }
     // 4. 添加 token 请求头标识
-    const memberStore = useUserStore()
-    const token = memberStore.profile?.token
+    const userStore = useUserStore()
+    console.log(userStore, 'userStore interceport')
+    const token = userStore.token
     if (token) {
-      options.header.Authorization = token
+      options.header.Authorization = 'Bearer ' + token
     }
   },
 }
@@ -58,14 +59,16 @@ export const http = <T>(options: UniApp.RequestOptions) => {
       ...options,
       // 响应成功
       success(res) {
+        console.log(res, 'HTTP', res.statusCode)
         // 状态码 2xx， axios 就是这样设计的
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 2.1 提取核心数据 res.data
           resolve(res.data as Data<T>)
-        } else if (res.statusCode === 401) {
+        } else if (res.statusCode === 401 || res.statusCode === 400) {
           // 401错误  -> 清理用户信息，跳转到登录页
           const userStore = useUserStore()
           userStore.clearProfile()
+          userStore.updateToken('')
           uni.navigateTo({ url: '/pages/login/index' })
           reject(res)
         } else {

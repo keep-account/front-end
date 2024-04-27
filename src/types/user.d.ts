@@ -1,3 +1,4 @@
+import { Account } from './account'
 export type User = {
   id: number | string
   username: string
@@ -6,6 +7,7 @@ export type User = {
   avatar: string
 }
 
-export type LoginResult = User & {
-  access_token: string
+export type UserInfo = User & {
+  ownedAccounts: Account[]
+  shareAccounts: Account[]
 }

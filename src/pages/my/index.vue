@@ -1,10 +1,19 @@
 <template>
-  <view class="flex flex-col px-4">
-    <image class="logo" src="/static/logo.png" />
-    <view class="flex justify-center mb-2">
-      <text class="text-red-400 font-extrabold">{{ title }}</text>
-    </view>
-    <view class="flex flex-col">
+  <view class="flex flex-col px-4 py-4">
+    <navigator
+      url="/pages/myprofile/index"
+      class="flex flex-row justify-start border border-red-400 border-solid"
+      hover-class="none"
+    >
+      <view class="mr-4">
+        <image class="w-12 h-12 m-auto rounded-3xl" :src="user.profile.avatar" />
+      </view>
+      <view class="flex justify-center mb-2 flex-col">
+        <text class="text-fontMain font-extrabold mb-2">{{ user.profile.username }}</text>
+        <text class="text-fontPatch">{{ user.profile.signature }}</text>
+      </view>
+    </navigator>
+    <view class="flex flex-col my-5">
       <navigator url="/pages/mine/index" class="w-full mb-5" hover-class="none">
         <view class="flex w-full justify-between">
           <text class="text-base">关于我们</text>
@@ -22,8 +31,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-const title = ref("Hello Guys");
+import { ref } from 'vue'
+import { useUserStore } from '@/store'
+const title = ref('Hello Guys')
+const user = useUserStore()
 </script>
 
 <style>

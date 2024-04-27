@@ -1,4 +1,4 @@
-import type { User } from '@/types/user'
+import type { LoginToken, User } from '@/types/user'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -21,6 +21,7 @@ export const useUserStore = defineStore(
 
     // 清理会员信息，退出时使用
     const clearProfile = () => {
+      console.log('clear profile')
       profile.value = {
         id: '',
         username: '',
@@ -30,11 +31,18 @@ export const useUserStore = defineStore(
       }
     }
 
+    const token = ref('')
+    const updateToken = (tokenU: string) => {
+      token.value = tokenU
+    }
+
     // 记得 return
     return {
       profile,
       setProfile,
       clearProfile,
+      token,
+      updateToken,
     }
   },
   {
@@ -42,14 +50,7 @@ export const useUserStore = defineStore(
     // persist: true,
     // 小程序端配置
     persist: {
-      storage: {
-        getItem(key: string) {
-          return uni.getStorageSync(key)
-        },
-        setItem(key: string, value: string) {
-          uni.setStorageSync(key, value)
-        },
-      },
+      paths: ['profile', 'token'],
     },
   },
 )
