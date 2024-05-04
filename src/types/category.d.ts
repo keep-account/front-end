@@ -6,3 +6,7 @@ export type CategoryItem = {
   shareAccountId?: number
   upTime: string
 }
+
+export type CategoryData = {
+  categorys: CategoryItem[]
+}

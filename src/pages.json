@@ -55,6 +55,12 @@
       "style": {
         "navigationBarTitleText": "编辑个人页"
       }
+    },
+    {
+      "path": "pages/category/index",
+      "style": {
+        "navigationBarTitleText": "分类管理"
+      }
     }
   ],
   "globalStyle": {

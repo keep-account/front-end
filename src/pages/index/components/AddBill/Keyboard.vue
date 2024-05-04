@@ -51,10 +51,6 @@
   </view>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import clsx from 'clsx'
-// defineProps<{
-//   select: string | number
-// }>()
+import { ref } from 'vue'
 const nums = ref([1, 2, 3, 4, 5, 6, 7, 8, 9])
 </script>

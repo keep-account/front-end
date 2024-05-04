@@ -1,14 +1,19 @@
 <template>
   <view>
-    <FixAdd @change-bill="changeBill" />
-    <uni-popup ref="popup" type="bottom" background-color="#fff" borderRadius="16px 16px 0 0">
-      <view class="h-[600px] w-full px-4 box-border relative z-50">
+    <uni-popup
+      ref="popup"
+      type="bottom"
+      background-color="#fff"
+      borderRadius="16px 16px 0 0"
+      @change="changePopup"
+    >
+      <view class="h-[570px] w-full px-4 box-border relative z-50">
         <view class="my-5">
           <uni-icons type="closeempty" size="25" color="#666666" @click="toggle"></uni-icons>
         </view>
-        <view class="flex flex-row justify-between w-full">
+        <view class="flex flex-row justify-between w-full items-center">
           <view>
-            <block v-for="one in payTypeData" :key="one.id">
+            <block v-for="one in PayType" :key="one.id">
               <text
                 :class="
                   clsx('p-2 text-fontMajor text-base bg-payType rounded mx-1', {
@@ -20,7 +25,7 @@
               >
             </block>
           </view>
-          <view class="text-fontMain h-6 bg-payType px-2 py-1 rounded"
+          <view class="text-fontMain h-6 bg-payType p-1 rounded"
             ><picker
               mode="date"
               :value="date"
@@ -39,11 +44,16 @@
           <text class="text-fontMain font-extrabold text-2xl">￥</text>
           <text class="text-fontMain font-extrabold text-4xl">{{ amount }}</text>
         </view>
-        <CategoryList :list="list" @click-cate="clickCate" />
-        <view class="flex flex-row flex-nowrap my-5">
+        <Categorylist
+          v-if="selectCate && selectCate.categoryName"
+          :list="categoryData || []"
+          @click-cate="clickCate"
+          :selectCate="selectCate"
+        />
+        <view class="flex flex-row flex-nowrap my-3 w-full pr-4">
           <uni-icons type="compose" size="25" color="#666666"></uni-icons>
           <input
-            class="text-fontMajor p-1 borderB"
+            class="text-fontMajor p-1 borderB w-full"
             placeholder="添加备注..."
             :value="inputClearValue"
             @input="clearInput"
@@ -63,60 +73,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-// import clsx from 'clsx'
+import { ref, onMounted } from 'vue'
 import { clsx } from 'clsx'
-import CategoryList from './CategoryList.vue'
-import FixAdd from './FixAdd.vue'
+import dayjs from 'dayjs'
+import Categorylist from './ListCate.vue'
 import Keyboard from './Keyboard.vue'
+import type { CategoryItem } from '@/types/category'
+import type { Bill } from '@/types/bill'
+import { getCategoryList } from '@/services/category'
+import { addBill } from '@/services/bill'
 import { formatDate } from '@/utils'
+import { PayType } from '@/static/constant'
+import { useAccountStore } from '@/store'
+
+const emit = defineEmits(['refresh'])
+
+const accountStore = useAccountStore()
 const date = ref(formatDate(new Date(), 'YYYY-MM-DD'))
 const inputClearValue = ref('')
 const showClearIcon = ref(false)
-const list = ref([
-  {
-    id: 1,
-    categoryName: '早饭',
-    payType: 1,
-    userId: 0,
-    ctime: '2024-04-11T10:16:57.304Z',
-    upTime: '2024-04-17T11:54:52.000Z',
-  },
-  {
-    id: 2,
-    categoryName: '午饭',
-    payType: 1,
-    userId: 0,
-    ctime: '2024-04-11T10:19:40.540Z',
-    upTime: '2024-04-17T11:55:11.000Z',
-  },
-  {
-    id: 4,
-    categoryName: '晚饭',
-    payType: 1,
-    userId: 0,
-    ctime: '2024-04-11T10:20:49.299Z',
-    upTime: '2024-04-17T11:55:36.000Z',
-  },
-])
-
-const payTypeData = ref([
-  {
-    id: 1,
-    title: '支出',
-  },
-  {
-    id: 2,
-    title: '收入',
-  },
-  {
-    id: 0,
-    title: '不计入收支',
-  },
-])
 
 //  选择的收支payType
 const payType = ref<number>(1)
+const categoryData = ref<CategoryItem[]>()
+const originData = ref<CategoryItem[]>()
+
+// payType类型改变
+const changePayType = (e) => {
+  payType.value = +e
+  if (originData.value && originData.value.length) {
+    categoryData.value = originData.value.filter((el) => el.payType == e)
+  }
+}
 
 // 输入的金额
 const amount = ref<string>('')
@@ -124,38 +112,93 @@ const amount = ref<string>('')
 // 弹出层组件
 const popup = ref<UniHelper.UniPopupInstance>()
 
-const clickCate = (name: string) => {
-  uni.showToast({ icon: 'none', title: name })
-  console.log(name)
+const selectCate = ref<CategoryItem>()
+
+const clickCate = (category: CategoryItem) => {
+  selectCate.value = category
 }
 
-const toggle = (e) => {
-  popup.value?.close!()
-  uni.showTabBar()
+const getGoryList = async () => {
+  const res = await getCategoryList({
+    page: 1,
+    size: 20,
+  })
+  if (res.data.categorys && res.data.categorys.length) {
+    originData.value = res.data.categorys
+    categoryData.value = res.data.categorys.filter((el) => el.payType == payType.value)
+    selectCate.value = res.data.categorys[0]
+  }
 }
-const changeBill = (e) => {
-  uni.hideTabBar()
-  popup.value?.open!('bottom')
-  // 轻提示
+
+const toggle = () => {
+  popup.value?.close!()
+}
+
+const changePopup = (e) => {
+  if (e.show) {
+    uni.hideTabBar()
+  } else {
+    uni.showTabBar()
+  }
+}
+
+const changeBill = (bill?: Bill) => {
+  if (bill) {
+    // 需要设置属性
+    date.value = dayjs(bill.ctime).format('YYYY-MM-DD')
+    payType.value = bill.payType
+    inputClearValue.value = bill.remark || '' // 备注
+    amount.value = bill.amount // 金额
+    // 分类
+    selectCate.value = bill.category
+  }
+  popup.value?.open!()
 }
 
 const bindDateChange = (e) => {
-  console.log('picker发送选择改变，携带值为', e.detail.value)
   date.value = e.detail.value
 }
 
-// payType类型改变
-const changePayType = (e) => {
-  console.log(e, 'e')
-  payType.value = +e
+const resetParam = () => {
+  date.value = formatDate(new Date(), 'YYYY-MM-DD')
+  payType.value = 1
+  inputClearValue.value = '' // 备注
+  amount.value = '' // 金额
+  // 分类
+  if (originData && originData.value && originData.value[0]) {
+    selectCate.value = originData.value.filter((el) => el.payType == payType.value)[0]
+  }
+}
+
+const saveBill = async () => {
+  if (!selectCate.value?.id) {
+    uni.showToast({ icon: 'none', title: '请选择类目' })
+  }
+  if (accountStore.curAccount && selectCate.value?.id) {
+    // 传入的时间 选择的日期+当前时间小时/分/秒
+    let selectTime = dayjs().format('HH:mm:ss')
+    let lastTime = `${date.value}T${selectTime}`
+    await addBill({
+      amount: +amount.value,
+      payType: payType.value,
+      categoryId: selectCate.value?.id,
+      remark: inputClearValue.value,
+      accountId: accountStore.curAccount.id,
+      ctime: lastTime,
+    })
+    toggle()
+    resetParam()
+    // 提醒父组件刷新列表
+    emit('refresh')
+    uni.showToast({ icon: 'success', title: '添加成功' })
+  }
 }
 
 // 键盘相关
 const clickKeyboard = (e) => {
-  console.log(e, 'clickboard', typeof e == 'number')
   switch (e) {
     case 'enter':
-      uni.showToast({ icon: 'none', title: amount.value })
+      saveBill()
       break
     case 'delete':
       if (amount.value.length >= 1) {
@@ -164,7 +207,7 @@ const clickKeyboard = (e) => {
       }
       break
     case 'again':
-      uni.showToast({ icon: 'none', title: 'again' })
+      // 当前的需要保存 然后再次打开编辑弹框
       break
     case 'point':
       if (amount.value) {
@@ -199,4 +242,13 @@ const clearIcon = () => {
   showClearIcon.value = false
   inputClearValue.value = ''
 }
+
+// 获取分类列表
+onMounted(async () => {
+  await getGoryList()
+})
+// 暴露方法
+defineExpose({
+  changeBill,
+})
 </script>

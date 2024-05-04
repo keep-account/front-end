@@ -1,10 +1,6 @@
 <template>
   <view class="flex flex-col px-4 py-4">
-    <navigator
-      url="/pages/myprofile/index"
-      class="flex flex-row justify-start border border-red-400 border-solid"
-      hover-class="none"
-    >
+    <navigator url="/pages/myprofile/index" class="flex flex-row justify-start" hover-class="none">
       <view class="mr-4">
         <image class="w-12 h-12 m-auto rounded-3xl" :src="user.profile.avatar" />
       </view>
@@ -26,6 +22,22 @@
           <i class="font icon-arrow-right text-sm"></i>
         </view>
       </navigator>
+      <navigator url="/pages/category/index" class="w-full mb-5" hover-class="none">
+        <view class="flex w-full justify-between">
+          <text class="text-base">分类管理</text>
+          <i class="font icon-arrow-right text-sm"></i>
+        </view>
+      </navigator>
+      <navigator
+        url="weixin://dl/business/?appid=wx8b727ea944b22161&path=pages/index/index&env_version=release"
+        class="w-full mb-5"
+        hover-class="none"
+      >
+        <view class="flex w-full justify-between">
+          <text class="text-base">意见反馈</text>
+          <i class="font icon-arrow-right text-sm"></i>
+        </view>
+      </navigator>
     </view>
   </view>
 </template>
@@ -33,7 +45,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useUserStore } from '@/store'
-const title = ref('Hello Guys')
 const user = useUserStore()
 </script>
 

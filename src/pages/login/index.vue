@@ -1,9 +1,9 @@
 <template>
-  <view class="flex flex-col px-4">
-    <view class="w-full h-7 flex justify-center flex-col items-center text-center my-10">
+  <view class="flex flex-col px-4 items-center justify-center w-full h-full">
+    <!-- <view class="w-full h-7 flex justify-center flex-col items-center text-center my-10">
       <view>用户名: {{ username }}</view>
       <view>openid: {{ openid }}</view>
-    </view>
+    </view> -->
     <view class="w-full h-7 flex justify-center items-center text-center my-10">
       <button type="default" size="mini" @click="login">立即登录</button>
     </view>
@@ -21,8 +21,6 @@ const login = async () => {
   const dataRes = await Login({ code })
   userStore.setProfile(dataRes.data)
   userStore.updateToken(dataRes.data.access_token)
-  // uni.navigateTo({
-  //   url: 'pages/my/index',
-  // })
+  uni.navigateBack()
 }
 </script>

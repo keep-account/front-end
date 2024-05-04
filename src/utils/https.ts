@@ -1,6 +1,6 @@
 import { useUserStore } from '@/store'
 // 请求基地址
-const baseURL = 'https://bythewayer.com/api/v1'
+export const baseURL = 'https://bythewayer.com/api/v1'
 
 // 拦截器配置
 const httpInterceptor = {
@@ -19,7 +19,6 @@ const httpInterceptor = {
     }
     // 4. 添加 token 请求头标识
     const userStore = useUserStore()
-    console.log(userStore, 'userStore interceport')
     const token = userStore.token
     if (token) {
       options.header.Authorization = 'Bearer ' + token
@@ -59,7 +58,6 @@ export const http = <T>(options: UniApp.RequestOptions) => {
       ...options,
       // 响应成功
       success(res) {
-        console.log(res, 'HTTP', res.statusCode)
         // 状态码 2xx， axios 就是这样设计的
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 2.1 提取核心数据 res.data

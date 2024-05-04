@@ -3,7 +3,7 @@ import { Category } from './category'
 export type Bill = {
   id: number
   userId?: number
-  amount: number
+  amount: string
   categoryId: number
   categoryName?: string
   payType: number

@@ -3,13 +3,14 @@
     <image class="logo" src="/static/logo.png" />
     <view class="text-area">
       <text class="text-red-400 font-extrabold">{{ title }}</text>
+      <text class="text-red-400 font-extrabold">正在开发中...</text>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
-const title = ref("analyze")
+import { ref } from 'vue'
+const title = ref('analyze')
 </script>
 
 <style>

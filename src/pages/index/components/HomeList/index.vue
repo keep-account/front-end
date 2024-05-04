@@ -20,13 +20,20 @@
             >
           </view>
         </view>
-        <view class="flex flex-col last-of-type:border-none">
-          <block v-for="one in item.bills" :key="one.id">
-            <view class="flex flex-row justify-between py-2 borderB" style="">
+        <uni-swipe-action ref="actionsheet">
+          <uni-swipe-action-item
+            v-for="one in item.bills"
+            :key="one.id"
+            @click="onClick($event, one)"
+            :right-options="options"
+            @change="change"
+            class="flex flex-col last-of-type:border-none"
+          >
+            <view class="flex flex-row justify-between items-center py-2 borderB" style="">
               <view>
                 <view class="flex flex-row items-center">
                   <!-- <i class="font icon-unlock text-lg mr-2"></i> -->
-                  <uni-icons type="fire-filled" size="20" color="#666666"></uni-icons>
+                  <!-- <uni-icons type="fire-filled" size="20" color="#666666"></uni-icons> -->
                   <view>
                     <text class="text-fontMain text-base">{{ one.category?.categoryName }}</text>
                     <view>
@@ -37,12 +44,12 @@
                   </view>
                 </view>
               </view>
-              <text class="text-fontMain text-base font-bold">
+              <text class="text-fontMain text-base font-bold mr-2">
                 {{ one.payType === 1 ? '-' : '+' }}{{ one.amount }}
               </text>
             </view>
-          </block>
-        </view>
+          </uni-swipe-action-item>
+        </uni-swipe-action>
       </view>
     </block>
   </view>
@@ -51,8 +58,41 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import dayjs from 'dayjs'
+import { removeBill } from '@/services/bill'
 import type { Bill, BillData } from '@/types/bill'
 defineProps<{
   list: BillData[]
 }>()
+const actionsheet = ref()
+const emit = defineEmits(['refresh', 'editPop'])
+const options = [
+  {
+    text: '编辑',
+    style: {
+      backgroundColor: '#ff8155',
+    },
+  },
+  {
+    text: '删除',
+    style: {
+      backgroundColor: '#f9a01f',
+    },
+  },
+]
+const onClick = async (e, one: Bill) => {
+  const { index } = e
+  if (index == 1) {
+    //delete
+    await removeBill(one.id)
+    emit('refresh')
+    uni.showToast({ title: 'Done' })
+  } else {
+    // 打开编辑弹框
+    emit('editPop', one)
+    actionsheet.value.closeAll()
+  }
+}
+const change = (e) => {
+  console.log(e)
+}
 </script>
