@@ -20,12 +20,12 @@
             >
           </view>
         </view>
-        <uni-swipe-action ref="actionsheet">
+        <uni-swipe-action>
           <uni-swipe-action-item
             v-for="one in item.bills"
             :key="one.id"
             @click="onClick($event, one)"
-            :right-options="options"
+            :rightOptions="options"
             @change="change"
             class="flex flex-col last-of-type:border-none"
           >
@@ -89,10 +89,10 @@ const onClick = async (e, one: Bill) => {
   } else {
     // 打开编辑弹框
     emit('editPop', one)
-    actionsheet.value.closeAll()
+    // actionsheet.value.closeAll()
   }
 }
 const change = (e) => {
-  console.log(e)
+  console.log(e, 'change ')
 }
 </script>

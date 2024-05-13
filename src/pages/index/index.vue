@@ -51,7 +51,7 @@ import { ref, computed } from 'vue'
 import dayjs from 'dayjs'
 import { getBillsByAccount } from '@/services/bill'
 import { getUseInfo } from '@/services/user'
-import { onLoad } from '@dcloudio/uni-app'
+import { onLoad, onShow } from '@dcloudio/uni-app'
 import type { BillRes, Bill } from '@/types/bill'
 import type { HomeAddInstance } from '@/types/components'
 import { useAccountStore } from '@/store'
@@ -61,6 +61,7 @@ import FixAdd from './components/AddBill/FixAdd.vue'
 import HomeBar from './components/HomeBar/index.vue'
 import { formatDate } from '@/utils'
 import { HomeIcons } from '@/static/constant'
+
 const title = ref('账本切换')
 const date = ref(formatDate(new Date(), 'YYYY-MM'))
 const list = ref(HomeIcons)
@@ -81,12 +82,15 @@ const editPop = (item: Bill) => {
 
 const changeBill = (item?: Bill) => {
   if (modal.value && modal.value.changeBill) {
-    modal.value.changeBill(item)
+    if (item && Object.keys(item).length) {
+      modal.value.changeBill(item)
+    } else {
+      modal.value.changeBill()
+    }
   }
 }
 
 const getBillList = async (name?: string) => {
-  console.log('name::', name)
   if (accountStore.curAccount) {
     const res = await getBillsByAccount({
       page: 1,
@@ -113,7 +117,13 @@ const getBillsInfo = async () => {
     getBillsInfo()
   }
 }
+
+uni.$once('indexUpdate', function (data) {
+  getBillsInfo()
+})
+
 onLoad(async () => {
+  console.log('onload')
   await getBillsInfo()
 })
 </script>

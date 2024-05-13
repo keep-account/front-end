@@ -50,7 +50,7 @@
           @click-cate="clickCate"
           :selectCate="selectCate"
         />
-        <view class="flex flex-row flex-nowrap my-3 w-full pr-4">
+        <view class="flex flex-row flex-nowrap py-3 w-full pr-4">
           <uni-icons type="compose" size="25" color="#666666"></uni-icons>
           <input
             class="text-fontMajor p-1 borderB w-full"
@@ -151,6 +151,8 @@ const changeBill = (bill?: Bill) => {
     amount.value = bill.amount // 金额
     // 分类
     selectCate.value = bill.category
+  } else {
+    resetParam()
   }
   popup.value?.open!()
 }

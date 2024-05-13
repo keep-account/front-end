@@ -11,6 +11,12 @@
 .highlightEnter {
   background-color: #f9a01f !important;
 }
+.feedback::after {
+  content: '';
+  border: none;
+  position: absolute;
+  border-radius: 0;
+}
 @layer components {
   .boardItem {
     @apply text-3xl text-center bg-white rounded-lg py-3;

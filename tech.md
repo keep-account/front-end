@@ -12,6 +12,10 @@
 - app.vue 如果本地有账本信息，则继续请求当前账本的列表信息 如果没有账本信息则需要请求用户信息 拿到第一个账本
 - index.vue 通过第一个账本信息 拿到账单信息列表
 
+## 需要沉淀的组件
+
+- [popup](https://tdesign.tencent.com/miniprogram/components/popup)
+
 ## 技术 vue3+uniapp
 
 - [uniapp ui](https://uniapp.dcloud.net.cn/component/web-view.html)

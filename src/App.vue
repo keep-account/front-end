@@ -4,7 +4,6 @@ import { getUseInfo } from '@/services/user'
 import { useAccountStore, useUserStore } from '@/store'
 onLaunch(() => {})
 onShow(async () => {
-  console.log('onshow')
   const accountStore = useAccountStore()
   const userStore = useUserStore()
   if (!accountStore.curAccount) {

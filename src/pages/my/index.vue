@@ -28,16 +28,12 @@
           <i class="font icon-arrow-right text-sm"></i>
         </view>
       </navigator>
-      <navigator
-        url="weixin://dl/business/?appid=wx8b727ea944b22161&path=pages/index/index&env_version=release"
-        class="w-full mb-5"
-        hover-class="none"
-      >
+      <button class="feedback w-full mb-5 !border-0 bg-white h-11 p-0 m-0" open-type="feedback">
         <view class="flex w-full justify-between">
           <text class="text-base">意见反馈</text>
           <i class="font icon-arrow-right text-sm"></i>
         </view>
-      </navigator>
+      </button>
     </view>
   </view>
 </template>
@@ -47,14 +43,3 @@ import { ref } from 'vue'
 import { useUserStore } from '@/store'
 const user = useUserStore()
 </script>
-
-<style>
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 100rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-</style>
