@@ -1,5 +1,5 @@
 <template>
-  <view class="fixed bottom-0 right-0 left-0 pb-4 px-2 bg-[#f9f9f9] pt-2">
+  <view class="pb-4 pt-2">
     <view class="grid grid-rows-4 grid-cols-4 gap-2" ref="elementRef">
       <block v-for="item in nums" :key="item">
         <view

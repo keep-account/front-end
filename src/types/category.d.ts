@@ -1,10 +1,10 @@
 export type CategoryItem = {
   id: number
   categoryName: string
-  userId: number
+  userId?: number
   payType: number
   shareAccountId?: number
-  upTime: string
+  upTime?: string
 }
 
 export type CategoryData = {

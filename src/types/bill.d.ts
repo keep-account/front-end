@@ -1,7 +1,7 @@
 import { Category } from './category'
 
 export type Bill = {
-  id: number
+  id?: number
   userId?: number
   amount: string
   categoryId: number
@@ -11,7 +11,7 @@ export type Bill = {
   category?: Category
   ctime: string
   upTime: string
-  shareAccountId: number
+  shareAccountId?: number
 }
 
 export interface BillAdd

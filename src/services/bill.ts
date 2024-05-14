@@ -36,6 +36,13 @@ export const addBill = (param: AddBillParam) => {
 }
 
 // 修改账单
+export const updateBill = (param: AddBillParam, id: number) => {
+  return http({
+    method: 'PUT',
+    url: '/bill/' + id,
+    data: param,
+  })
+}
 
 // 删除账单
 export const removeBill = (id: number) => {

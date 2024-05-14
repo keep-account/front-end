@@ -26,3 +26,20 @@ export const addCategory = (data: AddParam) => {
     data,
   })
 }
+
+// remove
+export const deletCategory = (id: number) => {
+  return http<CategoryData>({
+    method: 'DELETE',
+    url: '/category/' + id,
+  })
+}
+
+// update
+export const updateCategory = (data: AddParam, id: number) => {
+  return http<CategoryData>({
+    method: 'PUT',
+    url: '/category/' + id,
+    data,
+  })
+}

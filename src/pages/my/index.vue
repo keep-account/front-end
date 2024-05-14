@@ -1,12 +1,21 @@
 <template>
   <view class="flex flex-col px-4 py-4">
     <navigator url="/pages/myprofile/index" class="flex flex-row justify-start" hover-class="none">
-      <view class="mr-4">
-        <image class="w-12 h-12 m-auto rounded-3xl" :src="user.profile.avatar" />
-      </view>
-      <view class="flex justify-center mb-2 flex-col">
-        <text class="text-fontMain font-extrabold mb-2">{{ user.profile.username }}</text>
-        <text class="text-fontPatch">{{ user.profile.signature }}</text>
+      <view
+        class="flex flex-row justify-between w-full shadow-lg shadow-indigo-500/10 px-3 rounded-lg items-center"
+      >
+        <view class="flex flex-row">
+          <view class="mr-4">
+            <image class="w-12 h-12 m-auto rounded-3xl" :src="user.profile.avatar" />
+          </view>
+          <view class="flex justify-center mb-2 flex-col">
+            <text class="text-fontMain font-extrabold mb-2">{{ user.profile.username }}</text>
+            <text class="text-fontPatch">{{ user.profile.signature }}</text>
+          </view>
+        </view>
+        <view>
+          <text>修改信息</text>
+        </view>
       </view>
     </navigator>
     <view class="flex flex-col my-5">

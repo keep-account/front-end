@@ -23,7 +23,7 @@ export const getUseInfo = async () => {
 export interface UpdateUser {}
 
 // update
-export const updateUserInfo = async (param: Pick<User, 'avatar' | 'username' | 'id'>) => {
+export const updateUserInfo = async (param: Omit<User, 'openid'>) => {
   return await http<UserInfo>({
     method: 'PUT',
     url: `/user/${param.id}`,

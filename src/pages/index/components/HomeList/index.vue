@@ -38,14 +38,14 @@
                     <text class="text-fontMain text-base">{{ one.category?.categoryName }}</text>
                     <view>
                       <text class="text-xs text-fontPatch"
-                        >{{ dayjs(one.upTime).format('hh:mm') }} &nbsp; {{ one.remark }}</text
+                        >{{ dayjs(one.ctime).format('HH:mm') }} &nbsp; {{ one.remark }}</text
                       >
                     </view>
                   </view>
                 </view>
               </view>
               <text class="text-fontMain text-base font-bold mr-2">
-                {{ one.payType === 1 ? '-' : '+' }}{{ one.amount }}
+                {{ one.payType === 1 ? '-' : '+' }}{{ Number(one.amount) }}
               </text>
             </view>
           </uni-swipe-action-item>
@@ -63,7 +63,6 @@ import type { Bill, BillData } from '@/types/bill'
 defineProps<{
   list: BillData[]
 }>()
-const actionsheet = ref()
 const emit = defineEmits(['refresh', 'editPop'])
 const options = [
   {
@@ -81,7 +80,7 @@ const options = [
 ]
 const onClick = async (e, one: Bill) => {
   const { index } = e
-  if (index == 1) {
+  if (index == 1 && one && one.id) {
     //delete
     await removeBill(one.id)
     emit('refresh')
