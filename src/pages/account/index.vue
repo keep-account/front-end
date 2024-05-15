@@ -8,8 +8,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
-const title = ref("账本页")
+import { ref } from 'vue'
+import { getAccountList } from '@/services/account'
+import type { Account } from '@/types/account'
+import { onLoad } from '@dcloudio/uni-app'
+const title = ref('账本页')
+const list = ref<Account[]>()
+
+onLoad(() => {
+  getAccountList().then((res) => {
+    console.log(res, 'res')
+  })
+})
 </script>
 
 <style>

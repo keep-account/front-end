@@ -1,5 +1,5 @@
 <template>
-  <view class="flex flex-row flex-wrap h-20 overflow-y-auto">
+  <view class="flex flex-row flex-wrap h-[84px] overflow-y-auto">
     <block v-for="(item, index) in list" :key="index">
       <view
         class="flex flex-row px-1 m-1 borderB justify-center items-center"

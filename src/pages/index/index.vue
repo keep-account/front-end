@@ -2,8 +2,11 @@
   <view class="flex flex-col relative">
     <view class="bg-mainImg flex flex-col bg-main px-4">
       <view class="relative flex justify-center">
-        <text class="text-lg text-white text-center">{{ title }}</text>
-        <view class="w-24 text-white h-5 z-10 border border-red-500 absolute top-0 right-0"
+        <view class="flex justify-center items-center">
+          <text class="text-lg text-white text-center" @click="toAccount">{{ title }} </text>
+          <uni-icons type="loop" size="20" color="#ffffff"></uni-icons>
+        </view>
+        <view class="w-22 text-white h-5 z-10 border border-red-500 absolute top-0 right-0"
           ><picker
             mode="date"
             :value="date"
@@ -15,7 +18,7 @@
             <text class="picker">
               {{ date }}
             </text>
-            <i class="font icon-arrow-right text-sm text-white inline ml-2 rotate-90"></i>
+            <i class="font icon-arrow-right text-sm text-white inline ml-1 rotate-90"></i>
           </picker>
         </view>
       </view>
@@ -47,11 +50,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import dayjs from 'dayjs'
 import { getBillsByAccount } from '@/services/bill'
 import { getUseInfo } from '@/services/user'
-import { onLoad, onShow } from '@dcloudio/uni-app'
+import { onLoad } from '@dcloudio/uni-app'
 import type { BillRes, Bill } from '@/types/bill'
 import type { HomeAddInstance } from '@/types/components'
 import { useAccountStore } from '@/store'
@@ -123,7 +126,14 @@ uni.$once('indexUpdate', function (data) {
 })
 
 onLoad(async () => {
-  console.log('onload')
   await getBillsInfo()
 })
+
+const toAccount = () => {
+  if (accountStore.curAccount && accountStore.curAccount.id) {
+    uni.navigateTo({
+      url: '/pages/account/index?id=' + accountStore.curAccount?.id,
+    })
+  }
+}
 </script>
