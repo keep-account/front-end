@@ -73,7 +73,6 @@ const saveProfile = async () => {
   })
 }
 onMounted(() => {
-  console.log(useStore.profile, 'useStore')
   userInfo.value.avatar = useStore.profile.avatar
   userInfo.value.nickName = useStore.profile.username
   userInfo.value.signature = useStore.profile.signature

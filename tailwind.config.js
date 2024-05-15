@@ -34,6 +34,9 @@ module.exports = {
         88: '22rem',
         92: '23rem',
       },
+      width: {
+        21: '5.25rem',
+      },
       textColor: {
         primaryOne: '#111111',
         primaryThree: '#333333',

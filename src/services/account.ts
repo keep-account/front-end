@@ -10,7 +10,10 @@ export const getAccountInfo = (id: number) => {
 }
 // 获取账本列表
 export const getAccountList = () => {
-  return http<Account>({
+  return http<{
+    accounts: Account[]
+    total: number
+  }>({
     method: 'GET',
     url: `/account/list?page=1&size=10`,
   })

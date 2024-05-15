@@ -16,7 +16,9 @@
             >
             <text class="text-xs"
               >余:
-              <text class="text-primary">{{ item.totalIncome - item.totalExpense }}</text></text
+              <text class="text-primary">{{
+                DataTransfer(item.totalIncome - item.totalExpense)
+              }}</text></text
             >
           </view>
         </view>
@@ -93,5 +95,8 @@ const onClick = async (e, one: Bill) => {
 }
 const change = (e) => {
   console.log(e, 'change ')
+}
+const DataTransfer = (data: number) => {
+  return +(data * 100).toFixed(2) / 100
 }
 </script>

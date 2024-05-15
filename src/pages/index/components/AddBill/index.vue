@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { onShow } from '@dcloudio/uni-app'
+import { onShow, onLoad } from '@dcloudio/uni-app'
 import { clsx } from 'clsx'
 import dayjs from 'dayjs'
 import Categorylist from './ListCate.vue'
@@ -264,6 +264,7 @@ const clickKeyboard = (e) => {
 onShow(async () => {
   await getGoryList()
 })
+
 // 暴露方法
 defineExpose({
   changeBill,

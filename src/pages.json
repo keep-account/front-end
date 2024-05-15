@@ -23,7 +23,8 @@
     {
       "path": "pages/account/index",
       "style": {
-        "navigationBarTitleText": "账本"
+        "navigationBarTitleText": "账本",
+        "backgroundColor": "#f9a01f"
       }
     },
     {

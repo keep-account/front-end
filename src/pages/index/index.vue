@@ -3,10 +3,13 @@
     <view class="bg-mainImg flex flex-col bg-main px-4">
       <view class="relative flex justify-center">
         <view class="flex justify-center items-center">
-          <text class="text-lg text-white text-center" @click="toAccount">{{ title }} </text>
+          <text class="text-lg text-white text-center" @click="toAccount"
+            >{{ accountStore.curAccount?.accountName }}
+          </text>
+          &nbsp;
           <uni-icons type="loop" size="20" color="#ffffff"></uni-icons>
         </view>
-        <view class="w-22 text-white h-5 z-10 border border-red-500 absolute top-0 right-0"
+        <view class="w-21 text-white h-5 z-10 border border-red-500 absolute top-0 right-0"
           ><picker
             mode="date"
             :value="date"
@@ -18,7 +21,7 @@
             <text class="picker">
               {{ date }}
             </text>
-            <i class="font icon-arrow-right text-sm text-white inline ml-1 rotate-90"></i>
+            <i class="font icon-arrow-right text-sm text-white inline rotate-90"></i>
           </picker>
         </view>
       </view>
@@ -54,7 +57,7 @@ import { ref } from 'vue'
 import dayjs from 'dayjs'
 import { getBillsByAccount } from '@/services/bill'
 import { getUseInfo } from '@/services/user'
-import { onLoad } from '@dcloudio/uni-app'
+import { onLoad, onShow } from '@dcloudio/uni-app'
 import type { BillRes, Bill } from '@/types/bill'
 import type { HomeAddInstance } from '@/types/components'
 import { useAccountStore } from '@/store'
@@ -64,8 +67,9 @@ import FixAdd from './components/AddBill/FixAdd.vue'
 import HomeBar from './components/HomeBar/index.vue'
 import { formatDate } from '@/utils'
 import { HomeIcons } from '@/static/constant'
+import type { Account } from '@/types/account'
 
-const title = ref('账本切换')
+const page = ref<number>(1)
 const date = ref(formatDate(new Date(), 'YYYY-MM'))
 const list = ref(HomeIcons)
 // 月份切换 进行查询数据
@@ -75,7 +79,7 @@ const bindDateChange = (e) => {
 }
 const billRes = ref<BillRes>()
 const accountStore = useAccountStore()
-
+const curAccount = ref<Account>()
 const modal = ref<HomeAddInstance>()
 
 // 编辑弹框
@@ -96,12 +100,13 @@ const changeBill = (item?: Bill) => {
 const getBillList = async (name?: string) => {
   if (accountStore.curAccount) {
     const res = await getBillsByAccount({
-      page: 1,
-      size: 20,
+      page: page.value,
+      size: 10,
       startTime: dayjs(date.value).startOf('M').format('YYYY-MM-DD'),
       endTime: dayjs(date.value).endOf('M').format('YYYY-MM-DD'),
       accountId: accountStore.curAccount.id,
     })
+    console.log(res, 'resres')
     if (res.data) {
       billRes.value = res.data
     }
@@ -125,7 +130,17 @@ uni.$once('indexUpdate', function (data) {
   getBillsInfo()
 })
 
+onShow(() => {
+  if (curAccount) {
+    if (curAccount.value?.id != accountStore.curAccount?.id) {
+      curAccount.value = accountStore.curAccount
+      getBillsInfo()
+    }
+  }
+})
+
 onLoad(async () => {
+  curAccount.value = accountStore.curAccount
   await getBillsInfo()
 })
 
