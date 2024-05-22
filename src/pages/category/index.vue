@@ -14,7 +14,7 @@
       </block>
     </view>
     <view class="flex flex-row flex-wrap mb-5">
-      <block v-for="item in data" :key="item.id">
+      <block v-for="item in list" :key="item.id">
         <view class="p-2" @click="editCate(item)">
           <text>{{ item.categoryName }}</text>
         </view>
@@ -26,7 +26,7 @@
     <uni-popup ref="popup" type="bottom" background-color="#fff" borderRadius="16px 16px 0 0">
       <view class="h-[200px] w-full px-4 box-border relative z-50 flex flex-col justify-between">
         <view class="my-2 text-center">
-          <uni-icons type="closeempty" size="25" color="#666666" @click="toggle"></uni-icons>
+          <uni-icons type="closeempty" size="25" color="#666666" @click="closePop"></uni-icons>
         </view>
         <view class="pb-2 pt-2">
           <input
@@ -55,20 +55,24 @@ import { onLoad } from '@dcloudio/uni-app'
 
 // userid:0 不能删除 否则阔以删除
 const isEdit = ref(false)
+// 新增/编辑的那一个
 const curCategoryInfo = ref<CategoryItem>({
   categoryName: '',
   payType: 1,
   id: 0,
 })
+
+const list = ref<CategoryItem[]>()
+const originData = ref<CategoryItem[]>()
+
+// 改变收支类型
 const changePayType = (e) => {
   curCategoryInfo.value.payType = e
   if (originData.value && originData.value.length) {
-    data.value = originData.value.filter((el) => el.payType == e)
+    list.value = originData.value.filter((el) => el.payType == e)
   }
 }
 
-const data = ref<CategoryItem[]>()
-const originData = ref<CategoryItem[]>()
 const getList = async () => {
   const res = await getCategoryList({
     page: 1,
@@ -76,7 +80,7 @@ const getList = async () => {
   })
   if (res.data.categorys && res.data.categorys.length) {
     originData.value = res.data.categorys
-    data.value = res.data.categorys.filter((el) => el.payType == curCategoryInfo.value.payType)
+    list.value = res.data.categorys.filter((el) => el.payType == curCategoryInfo.value.payType)
   }
 }
 // 获取分类列表
@@ -85,9 +89,11 @@ onLoad(() => {
 })
 const popup = ref<UniHelper.UniPopupInstance>()
 const openPop = () => {
+  resetCate() // add
   popup.value?.open!()
 }
-const toggle = () => {
+const closePop = () => {
+  isEdit.value = false
   popup.value?.close!()
 }
 const changeName = (e) => {
@@ -100,6 +106,7 @@ const accountStore = useAccountStore()
 // 新增/编辑类别
 const saveCategory = async () => {
   if (isEdit.value && curCategoryInfo.value.id) {
+    isEdit.value = false
     await updateCategory(
       {
         categoryName: curCategoryInfo.value.categoryName,
@@ -117,10 +124,13 @@ const saveCategory = async () => {
   }
   await getList()
   popup.value?.close!()
+  resetCate()
+}
+const resetCate = () => {
   curCategoryInfo.value.categoryName = ''
   curCategoryInfo.value.payType = 1
+  curCategoryInfo.value.id = 0
 }
-
 // click  edit
 const editCate = async (item: CategoryItem) => {
   if (item.userId !== 0) {
@@ -131,9 +141,11 @@ const editCate = async (item: CategoryItem) => {
           deleteCate(item)
         } else {
           // update
-          openPop()
+          popup.value?.open!()
           isEdit.value = true
-          curCategoryInfo.value = item
+          curCategoryInfo.value.categoryName = item.categoryName
+          curCategoryInfo.value.payType = item.payType
+          curCategoryInfo.value.id = item.id
         }
       },
       fail: function (res) {

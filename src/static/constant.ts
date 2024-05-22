@@ -18,6 +18,7 @@ export const HomeIcons = [
   {
     title: '我的账本',
     icon: 'icon-lishijilu',
+    link: '/pages/account/index',
   },
   {
     title: '日历记账',

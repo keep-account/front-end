@@ -35,8 +35,25 @@
               <view>
                 <view class="flex flex-row items-center">
                   <!-- <i class="font icon-unlock text-lg mr-2"></i> -->
-                  <!-- <uni-icons type="fire-filled" size="20" color="#666666"></uni-icons> -->
-                  <view>
+                  <!-- <uni-icons
+                    v-if="one.payType == 1"
+                    type="shop"
+                    size="25"
+                    color="#f9a01f"
+                  ></uni-icons> -->
+                  <uni-icons
+                    v-if="one.payType != 1"
+                    type="hand-up-filled"
+                    size="25"
+                    color="#f9a01f"
+                  ></uni-icons>
+                  <view
+                    :class="
+                      clsx({
+                        'pl-3': one.payType != 1,
+                      })
+                    "
+                  >
                     <text class="text-fontMain text-base">{{ one.category?.categoryName }}</text>
                     <view>
                       <text class="text-xs text-fontPatch"
@@ -58,8 +75,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import dayjs from 'dayjs'
+import clsx from 'clsx'
 import { removeBill } from '@/services/bill'
 import type { Bill, BillData } from '@/types/bill'
 defineProps<{

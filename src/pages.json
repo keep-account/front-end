@@ -11,7 +11,8 @@
       "path": "pages/index/index",
       "style": {
         "navigationBarTitleText": "",
-        "navigationBarBackgroundColor": "#f9a01f"
+        "navigationBarBackgroundColor": "#f9a01f",
+        "backgroundColor": "#f9a01f"
       }
     },
     {
@@ -67,7 +68,7 @@
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "bythewayer",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
@@ -77,20 +78,20 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "static/tabs/home_1.png",
-        "selectedIconPath": "static/tabs/home_2.png"
+        "iconPath": "static/tabs/home_3.png",
+        "selectedIconPath": "static/tabs/home_4.png"
       },
       {
         "pagePath": "pages/analyze/index",
         "text": "分析",
-        "iconPath": "static/tabs/analyze_default.png",
-        "selectedIconPath": "static/tabs/analyze_selected.png"
+        "iconPath": "static/tabs/analyze_1.png",
+        "selectedIconPath": "static/tabs/analyze_2.png"
       },
       {
         "pagePath": "pages/my/index",
         "text": "我的",
-        "iconPath": "static/tabs/user_1.png",
-        "selectedIconPath": "static/tabs/user_2.png"
+        "iconPath": "static/tabs/user_3.png",
+        "selectedIconPath": "static/tabs/user_4.png"
       }
     ]
   }

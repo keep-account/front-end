@@ -16,7 +16,7 @@
     </view>
     <view class="flex flex-row mb-10">
       <text class="text-primarySix">个性签名：</text>
-      <input type="nickname" :value="userInfo.signature" @change="getSignature" />
+      <input :value="userInfo.signature" @change="getSignature" />
     </view>
     <view>
       <button class="bg-main text-white" @click="saveProfile">保存</button>
@@ -29,6 +29,7 @@ import { baseURL } from '@/utils/https'
 import { useUserStore } from '@/store'
 import { ref, onMounted } from 'vue'
 const useStore = useUserStore()
+const isChangeImg = ref(false)
 const userInfo = ref({
   nickName: '微信默认账户',
   avatar:
@@ -37,6 +38,7 @@ const userInfo = ref({
 })
 
 const onChooseAvatar = (e) => {
+  isChangeImg.value = true
   userInfo.value.avatar = e.detail.avatarUrl
 }
 const getNickname = (e) => {
@@ -45,32 +47,58 @@ const getNickname = (e) => {
 const getSignature = (e) => {
   userInfo.value.signature = e.detail.value
 }
+// 图片保存和简介要分开
 const saveProfile = async () => {
-  uni.uploadFile({
-    url: '/upload',
-    name: 'file',
-    filePath: userInfo.value.avatar,
-    success: async (res) => {
-      const data = JSON.parse(res.data)
-      const fileRes = data.data.filename
-      const avatarUrl = baseURL + '/uploads/' + fileRes
-      const profile = useStore.profile
-      useStore.setProfile({
-        ...profile,
-        username: userInfo.value.nickName,
-        avatar: avatarUrl,
-        signature: userInfo.value.signature,
-      })
-      await updateUserInfo({
-        avatar: avatarUrl,
-        username: userInfo.value.nickName,
-        id: profile.id,
-        signature: userInfo.value.signature,
-      })
-      uni.showToast({ icon: 'success', title: '更新成功' })
-      uni.navigateBack()
-    },
+  uni.showLoading({
+    title: '保存中',
   })
+  if (isChangeImg.value) {
+    uni.uploadFile({
+      url: '/upload',
+      name: 'file',
+      filePath: userInfo.value.avatar,
+      success: async (res) => {
+        isChangeImg.value = false
+        const data = JSON.parse(res.data)
+        const fileRes = data.data.filename
+        const avatarUrl = baseURL + '/uploads/' + fileRes
+        const profile = useStore.profile
+        useStore.setProfile({
+          ...profile,
+          username: userInfo.value.nickName,
+          avatar: avatarUrl,
+          signature: userInfo.value.signature,
+        })
+        await updateUserInfo({
+          avatar: avatarUrl,
+          username: userInfo.value.nickName,
+          id: profile.id,
+          signature: userInfo.value.signature,
+        })
+        uni.showToast({ icon: 'success', title: '更新成功' })
+      },
+      fail: (e) => {
+        console.log(e)
+      },
+      complete: (e) => {
+        uni.hideLoading()
+      },
+    })
+  } else {
+    const profile = useStore.profile
+    useStore.setProfile({
+      ...profile,
+      username: userInfo.value.nickName,
+      signature: userInfo.value.signature,
+    })
+    await updateUserInfo({
+      avatar: profile.avatar,
+      username: userInfo.value.nickName,
+      id: profile.id,
+      signature: userInfo.value.signature,
+    })
+    uni.showToast({ icon: 'success', title: '更新成功' })
+  }
 }
 onMounted(() => {
   userInfo.value.avatar = useStore.profile.avatar

@@ -23,4 +23,14 @@ export const getAccountList = () => {
 
 // 删除账本
 
+interface AddParam {
+  accountName: string
+}
 // 增加账本
+export const addAccount = (param: AddParam) => {
+  return http<Account>({
+    method: 'POST',
+    url: `/account`,
+    data: param,
+  })
+}

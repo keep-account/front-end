@@ -106,7 +106,6 @@ const getBillList = async (name?: string) => {
       endTime: dayjs(date.value).endOf('M').format('YYYY-MM-DD'),
       accountId: accountStore.curAccount.id,
     })
-    console.log(res, 'resres')
     if (res.data) {
       billRes.value = res.data
     }
@@ -132,6 +131,7 @@ uni.$once('indexUpdate', function (data) {
 
 onShow(() => {
   if (curAccount) {
+    // 如果id不同切换账本信息
     if (curAccount.value?.id != accountStore.curAccount?.id) {
       curAccount.value = accountStore.curAccount
       getBillsInfo()
@@ -147,7 +147,7 @@ onLoad(async () => {
 const toAccount = () => {
   if (accountStore.curAccount && accountStore.curAccount.id) {
     uni.navigateTo({
-      url: '/pages/account/index?id=' + accountStore.curAccount?.id,
+      url: '/pages/account/index',
     })
   }
 }
