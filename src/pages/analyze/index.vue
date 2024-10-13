@@ -3,7 +3,7 @@
     <image class="logo" src="/static/logo.png" />
     <view class="text-area">
       <text class="text-red-400 font-extrabold">{{ title }}</text>
-      <text class="text-red-400 font-extrabold">正在开发中...</text>
+      <text class="text-red-400 font-extrabold"> 正在开发中...要加油 </text>
     </view>
   </view>
 </template>

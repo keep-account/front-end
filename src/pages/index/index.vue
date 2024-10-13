@@ -92,6 +92,7 @@ const changeBill = (item?: Bill) => {
     if (item && Object.keys(item).length) {
       modal.value.changeBill(item)
     } else {
+      console.log('新增')
       modal.value.changeBill()
     }
   }

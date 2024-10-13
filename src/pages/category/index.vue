@@ -52,7 +52,7 @@ import type { CategoryItem, CategoryData } from '@/types/category'
 import { getCategoryList, addCategory, deletCategory, updateCategory } from '@/services/category'
 import { useAccountStore } from '@/store'
 import { onLoad } from '@dcloudio/uni-app'
-
+const popup = ref<UniHelper.UniPopupInstance>()
 // userid:0 不能删除 否则阔以删除
 const isEdit = ref(false)
 // 新增/编辑的那一个
@@ -87,7 +87,7 @@ const getList = async () => {
 onLoad(() => {
   getList()
 })
-const popup = ref<UniHelper.UniPopupInstance>()
+
 const openPop = () => {
   resetCate() // add
   popup.value?.open!()
@@ -132,6 +132,7 @@ const resetCate = () => {
   curCategoryInfo.value.id = 0
 }
 // click  edit
+// 默认分类不能编辑
 const editCate = async (item: CategoryItem) => {
   if (item.userId !== 0) {
     uni.showActionSheet({

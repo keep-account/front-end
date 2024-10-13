@@ -42,7 +42,7 @@
         </view>
         <view class="my-5">
           <text class="text-fontMain font-extrabold text-2xl">￥</text>
-          <text class="text-fontMain font-extrabold text-4xl">{{ billInfo.amount }}</text>
+          <text class="text-fontMain font-extrabold text-4xl">{{ Number(billInfo.amount) }}</text>
         </view>
         <Categorylist
           v-if="selectCate && selectCate.categoryName"
@@ -123,6 +123,7 @@ const changePayType = (e) => {
   billInfo.value.payType = +e
   if (originData.value && originData.value.length) {
     categoryData.value = originData.value.filter((el) => el.payType == e)
+    selectCate.value = categoryData.value[0]
   }
 }
 
@@ -139,6 +140,8 @@ const getGoryList = async () => {
     page: 1,
     size: 20,
   })
+  console.log(res, '获取分类列表')
+  console.log(billInfo, 'billInfo')
   if (res.data.categorys && res.data.categorys.length) {
     originData.value = res.data.categorys
     categoryData.value = res.data.categorys.filter((el) => el.payType == billInfo.value.payType)
@@ -159,11 +162,13 @@ const changePopup = (e) => {
 }
 
 const changeBill = (bill?: Bill) => {
+  console.log(bill, 'bill-changeBill')
   if (bill) {
     billInfo.value = bill
     // 需要设置属性
     date.value = dayjs(bill.ctime).format('YYYY-MM-DD')
     // 分类
+    changePayType(bill.payType)
     selectCate.value = bill.category
     isEdit.value = true
   } else {
@@ -185,6 +190,7 @@ const resetParam = () => {
   if (originData && originData.value && originData.value[0]) {
     selectCate.value = originData.value.filter((el) => el.payType == billInfo.value.payType)[0]
   }
+  changePayType(1)
 }
 // 区分编辑和添加
 const saveBill = async () => {
@@ -240,6 +246,10 @@ const clickKeyboard = (e) => {
       break
     case 'again':
       // 当前的需要保存 然后再次打开编辑弹框
+      uni.showToast({
+        title: '努力实现中',
+        duration: 2000,
+      })
       break
     case 'point':
       if (val) {

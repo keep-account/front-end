@@ -20,8 +20,21 @@ export const getAccountList = () => {
 }
 
 // 修改账本
+export const editAccount = (param: AddParam, id: number) => {
+  return http<Account>({
+    method: 'PUT',
+    url: `/account/` + id,
+    data: param,
+  })
+}
 
 // 删除账本
+export const deleteAccount = (id: number) => {
+  return http({
+    method: 'DELETE',
+    url: `/account/${id}`,
+  })
+}
 
 interface AddParam {
   accountName: string
