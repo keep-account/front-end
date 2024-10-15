@@ -18,7 +18,8 @@
     {
       "path": "pages/analyze/index",
       "style": {
-        "navigationBarTitleText": "分析"
+        "navigationBarTitleText": "分析",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -32,7 +33,7 @@
       "path": "pages/my/index",
       "style": {
         "navigationBarTitleText": "我的",
-        "backgroundColor": "#f9a01f"
+        "navigationStyle": "custom"
       }
     },
     {

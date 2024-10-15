@@ -25,6 +25,13 @@
 
 ### 分析
 
+三个模块组成
+
+- 支出和收入折线图
+- 合并同类项
+- 上期同比 扇形图
+- 图表库来自 [ucharts](https://www.ucharts.cn/v2/#/demo/index)
+
 ### 账本
 
 ### 我的
@@ -37,6 +44,8 @@
 - API 测试
 
 推荐用[apifox](https://app.apifox.com/project/4273966)进行调试
+
+> before https://speeding-flare-397213.postman.co/workspace/niaogege~0a1d4cce-5e1f-4a4f-88e9-50e14a3323db/request/2181046-b4751804-ea47-4c31-8267-cce94751cf3b
 
 - 增删改查
 - 服务端接口部署

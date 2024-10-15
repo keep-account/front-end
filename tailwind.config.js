@@ -20,6 +20,7 @@ module.exports = {
         last: '#ff8155',
         payType: '#f8f8f8',
         mainLast: '#ffb242',
+        mainGray: 'rgb(238, 238, 238)',
       },
       backgroundImage: {
         mainImg: 'linear-gradient(180deg, #f9a01f 0%, #ffb242 100%)',
