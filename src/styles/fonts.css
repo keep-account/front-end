@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'font'; /* Project id 4492642 */
-  src: url('//at.alicdn.com/t/c/font_4492642_qn0p7y57dp.woff2?t=1713838808667') format('woff2'),
-    url('//at.alicdn.com/t/c/font_4492642_qn0p7y57dp.woff?t=1713838808667') format('woff'),
-    url('//at.alicdn.com/t/c/font_4492642_qn0p7y57dp.ttf?t=1713838808667') format('truetype'),
-    url('//at.alicdn.com/t/c/font_4492642_qn0p7y57dp.svg?t=1713838808667#font') format('svg');
+  src: url('//at.alicdn.com/t/c/font_4492642_k4oz28rtgss.woff2?t=1729340732656') format('woff2'),
+    url('//at.alicdn.com/t/c/font_4492642_k4oz28rtgss.woff?t=1729340732656') format('woff'),
+    url('//at.alicdn.com/t/c/font_4492642_k4oz28rtgss.ttf?t=1729340732656') format('truetype'),
+    url('//at.alicdn.com/t/c/font_4492642_k4oz28rtgss.svg?t=1729340732656#font') format('svg');
 }
 
 .font {
@@ -12,6 +12,118 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-tools:before {
+  content: '\e652';
+}
+
+.icon-Tool:before {
+  content: '\eab9';
+}
+
+.icon-Tools:before {
+  content: '\e934';
+}
+
+.icon-a-righttoo-line:before {
+  content: '\ea12';
+}
+
+.icon-a-3fenxi2:before {
+  content: '\e619';
+}
+
+.icon-a-3qianshu:before {
+  content: '\e61a';
+}
+
+.icon-a-3qianshu2:before {
+  content: '\e61b';
+}
+
+.icon-a-3guanbi3:before {
+  content: '\e61c';
+}
+
+.icon-a-3shanchu:before {
+  content: '\e61e';
+}
+
+.icon-a-3xiazai:before {
+  content: '\e61f';
+}
+
+.icon-a-3lianjie3:before {
+  content: '\e624';
+}
+
+.icon-a-3shouye:before {
+  content: '\e625';
+}
+
+.icon-a-3renyuangengxin:before {
+  content: '\e627';
+}
+
+.icon-a-3wendang2:before {
+  content: '\e629';
+}
+
+.icon-a-3mima:before {
+  content: '\e63e';
+}
+
+.icon-a-3dianji:before {
+  content: '\e645';
+}
+
+.icon-a-3shezhi:before {
+  content: '\e646';
+}
+
+.icon-a-3shaixuan:before {
+  content: '\e647';
+}
+
+.icon-a-3liebiao:before {
+  content: '\e648';
+}
+
+.icon-a-3chenggong:before {
+  content: '\e649';
+}
+
+.icon-a-3shijian:before {
+  content: '\e64a';
+}
+
+.icon-a-3sousuo:before {
+  content: '\e64b';
+}
+
+.icon-a-3shouqi:before {
+  content: '\e64c';
+}
+
+.icon-a-3yanzhengma2:before {
+  content: '\e64d';
+}
+
+.icon-a-3yiwen:before {
+  content: '\e64e';
+}
+
+.icon-a-3gengduo:before {
+  content: '\e650';
+}
+
+.icon-a-3shibai:before {
+  content: '\e651';
+}
+
+.icon-moneybagfill:before {
+  content: '\e7ce';
 }
 
 .icon-shanchu:before {

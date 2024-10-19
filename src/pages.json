@@ -30,6 +30,13 @@
       }
     },
     {
+      "path": "pages/tool/index",
+      "style": {
+        "navigationBarTitleText": "工具",
+        "backgroundColor": "#f9a01f"
+      }
+    },
+    {
       "path": "pages/my/index",
       "style": {
         "navigationBarTitleText": "我的",
@@ -75,6 +82,9 @@
   },
   "tabBar": {
     "selectedColor": "#f9a01f",
+    "color": "#999",
+    "backgroundColor": "#F8F8F8",
+    "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -87,6 +97,12 @@
         "text": "分析",
         "iconPath": "static/tabs/analyze_1.png",
         "selectedIconPath": "static/tabs/analyze_2.png"
+      },
+      {
+        "pagePath": "pages/tool/index",
+        "text": "工具",
+        "iconPath": "static/tabs/ts-tool-kit_5.png",
+        "selectedIconPath": "static/tabs/ts-tool-kit_6.png"
       },
       {
         "pagePath": "pages/my/index",

@@ -21,16 +21,18 @@ export const HomeIcons = [
     link: '/pages/account/index',
   },
   {
-    title: '日历记账',
-    icon: 'icon-lishijilu',
+    title: '账本分析',
+    icon: 'icon-price-up',
+    link: '/pages/analyze/index',
   },
   {
     title: '年度账本',
-    icon: 'icon-new',
+    icon: 'icon-unlock',
   },
   {
-    title: '常用功能',
-    icon: 'icon-new',
+    title: '常用工具',
+    icon: 'icon-Tools',
+    link: '/pages/tool/index',
   },
 ]
 

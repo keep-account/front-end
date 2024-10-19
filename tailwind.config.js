@@ -50,6 +50,7 @@ module.exports = {
         fontMajor: '#484848',
         fontPatch: '#a4a6a6',
         fontLast: '#e1e1e1',
+        mainGray: 'rgb(238, 238, 238)',
       },
     },
   },

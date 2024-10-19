@@ -7,6 +7,7 @@ interface GetBillParam {
   accountId: number
   startTime: string
   endTime: string
+  asc: string
 }
 
 // 获取账单列表

@@ -106,6 +106,7 @@ const getBillList = async (name?: string) => {
       startTime: dayjs(date.value).startOf('M').format('YYYY-MM-DD'),
       endTime: dayjs(date.value).endOf('M').format('YYYY-MM-DD'),
       accountId: accountStore.curAccount.id,
+      asc: 'false',
     })
     if (res.data) {
       billRes.value = res.data

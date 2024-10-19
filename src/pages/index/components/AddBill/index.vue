@@ -140,8 +140,6 @@ const getGoryList = async () => {
     page: 1,
     size: 20,
   })
-  console.log(res, '获取分类列表')
-  console.log(billInfo, 'billInfo')
   if (res.data.categorys && res.data.categorys.length) {
     originData.value = res.data.categorys
     categoryData.value = res.data.categorys.filter((el) => el.payType == billInfo.value.payType)
